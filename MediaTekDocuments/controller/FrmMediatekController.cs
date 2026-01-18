@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MediaTekDocuments.model;
 using MediaTekDocuments.dal;
+using MediaTekDocuments.dto;
 
 namespace MediaTekDocuments.controller
 {
@@ -95,6 +96,92 @@ namespace MediaTekDocuments.controller
         public bool CreerExemplaire(Exemplaire exemplaire)
         {
             return access.CreerExemplaire(exemplaire);
+        }
+
+        /// <summary>
+        /// Vérifie si des exemplaires ou des commandes sont rattachés à ce livre
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
+        public bool SupprimerLivre(Livre livre)
+        {
+            if (GetExemplairesRevue(livre.Id).Count != 0)
+            {
+                return false;
+            } else
+            {
+                return access.SupprLivre(livre);
+            }
+        }
+
+        /// <summary>
+        /// Crée un livre  dans la bdd
+        /// </summary>
+        /// <param name="livre">L'objet Livre concerné</param>
+        /// <returns>True si la création a pu se faire</returns>
+        public bool CreerLivre(LivreDto livre)
+        {
+            return access.CreerLivre(livre);
+        }
+
+        public bool ModifierLivre(LivreDto livre)
+        {
+            return access.ModifierLivre(livre);
+        }
+
+        public bool CreerDvd(DvdDto dvd)
+        {
+            return access.CreerDvd(dvd);
+        }
+
+        public bool ModifierDvd(DvdDto dvd)
+        {
+            return access.ModifierDvd(dvd);
+        }
+
+        public bool CreerRevue(RevueDto revue)
+        {
+            return access.CreerRevue(revue);
+        }
+
+        public bool ModifierRevue(RevueDto revue)
+        {
+            return access.ModifierRevue(revue);
+        }
+
+
+        /// <summary>
+        /// Vérifie si des exemplaires ou des commandes sont rattachés à ce dvd
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
+        public bool SupprimerDvd(Dvd dvd)
+        {
+            if (GetExemplairesRevue(dvd.Id).Count != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return access.SupprDvd(dvd);
+            }
+        }
+
+        /// <summary>
+        /// Vérifie si des exemplaires ou des commandes sont rattachés à ce revue. Si non, la supprime
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
+        public bool SupprimerRevue(Revue revue)
+        {
+            if (GetExemplairesRevue(revue.Id).Count != 0)
+            {
+                return false;
+            }
+            else
+            {
+                return access.SupprRevue(revue);
+            }
         }
     }
 }

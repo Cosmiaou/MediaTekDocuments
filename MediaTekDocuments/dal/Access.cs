@@ -7,6 +7,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using System.Configuration;
 using System.Linq;
+using MediaTekDocuments.dto;
 
 namespace MediaTekDocuments.dal
 {
@@ -37,7 +38,12 @@ namespace MediaTekDocuments.dal
         private const string POST = "POST";
         /// <summary>
         /// méthode HTTP pour update
-
+        /// </summary>
+        private const string PUT = "PUT";
+        /// <summary>
+        /// méthode HTTP pour delete
+        /// </summary>
+        private const string DELETE = "DELETE";
         /// <summary>
         /// Méthode privée pour créer un singleton
         /// initialise l'accès à l'API
@@ -47,7 +53,7 @@ namespace MediaTekDocuments.dal
             String authenticationString;
             try
             {
-                authenticationString = "admin:adminpwd";
+                authenticationString = "apiadmin:";
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
@@ -154,6 +160,160 @@ namespace MediaTekDocuments.dal
             try
             {
                 List<Exemplaire> liste = TraitementRecup<Exemplaire>(POST, "exemplaire", "champs=" + jsonExemplaire);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Supprime un livre de la BdD
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns></returns>
+        public bool SupprLivre(Livre livre)
+        {
+            String jsonLivre = convertToJson("id", livre.Id);
+            try
+            {
+                List<Livre> liste = TraitementRecup<Livre>(DELETE, "livre/" + jsonLivre, null);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            } return false;
+        }
+
+        /// <summary>
+        /// ecriture d'un livre en base de données
+        /// </summary>
+        /// <param name="livre">livre à insérer</param>
+        /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
+        public bool CreerLivre(LivreDto livre)
+        {
+            String jsonLivre = JsonConvert.SerializeObject(livre);
+            try
+            {
+                List<LivreDto> liste = TraitementRecup<LivreDto>(POST, "livre", "champs=" + jsonLivre);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool ModifierLivre(LivreDto livre)
+        {
+            String jsonLivre = JsonConvert.SerializeObject(livre);
+            try
+            {
+                List<LivreDto> liste = TraitementRecup<LivreDto>(PUT, "livre/" + livre.Id, "champs=" + jsonLivre);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Supprime un Dvd de la BdD
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
+        public bool SupprDvd(Dvd dvd)
+        {
+            String jsonDvd = convertToJson("id", dvd.Id);
+            try
+            {
+                List<Livre> liste = TraitementRecup<Livre>(DELETE, "dvd/" + jsonDvd, null);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool CreerDvd(DvdDto dvd)
+        {
+            String jsonDvd = JsonConvert.SerializeObject(dvd);
+            try
+            {
+                List<DvdDto> liste = TraitementRecup<DvdDto>(POST, "dvd", "champs=" + jsonDvd);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool ModifierDvd(DvdDto dvd)
+        {
+            String jsonDvd = JsonConvert.SerializeObject(dvd);
+            try
+            {
+                List<DvdDto> liste = TraitementRecup<DvdDto>(PUT, "dvd/" + dvd.Id, "champs=" + jsonDvd);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Supprime une Revue de la BdD
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns></returns>
+        public bool SupprRevue(Revue revue)
+        {
+            String jsonRevue = convertToJson("id", revue.Id);
+            try
+            {
+                List<Revue> liste = TraitementRecup<Revue>(DELETE, "revue/" + jsonRevue, null);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool CreerRevue(RevueDto revue)
+        {
+            String jsonRevue = JsonConvert.SerializeObject(revue);
+            try
+            {
+                List<RevueDto> liste = TraitementRecup<RevueDto>(POST, "revue", "champs=" + jsonRevue);
+                return (liste != null);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        public bool ModifierRevue(RevueDto revue)
+        {
+            String jsonRevue = JsonConvert.SerializeObject(revue);
+            try
+            {
+                List<RevueDto> liste = TraitementRecup<RevueDto>(PUT, "revue/" + revue.Id, "champs=" + jsonRevue);
                 return (liste != null);
             }
             catch (Exception ex)
