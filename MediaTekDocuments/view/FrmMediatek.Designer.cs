@@ -193,6 +193,9 @@ namespace MediaTekDocuments.view
             this.label53 = new System.Windows.Forms.Label();
             this.label54 = new System.Windows.Forms.Label();
             this.btnReceptionRechercher = new System.Windows.Forms.Button();
+            this.tabCommandeLivres = new System.Windows.Forms.TabPage();
+            this.tabCommandeDvd = new System.Windows.Forms.TabPage();
+            this.tabCommandeRevues = new System.Windows.Forms.TabPage();
             this.tabOngletsApplication.SuspendLayout();
             this.tabLivres.SuspendLayout();
             this.grpLivresInfos.SuspendLayout();
@@ -226,7 +229,11 @@ namespace MediaTekDocuments.view
             this.tabOngletsApplication.Controls.Add(this.tabDvd);
             this.tabOngletsApplication.Controls.Add(this.tabRevues);
             this.tabOngletsApplication.Controls.Add(this.tabReceptionRevue);
+            this.tabOngletsApplication.Controls.Add(this.tabCommandeLivres);
+            this.tabOngletsApplication.Controls.Add(this.tabCommandeDvd);
+            this.tabOngletsApplication.Controls.Add(this.tabCommandeRevues);
             this.tabOngletsApplication.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabOngletsApplication.HotTrack = true;
             this.tabOngletsApplication.ItemSize = new System.Drawing.Size(49, 18);
             this.tabOngletsApplication.Location = new System.Drawing.Point(0, 0);
             this.tabOngletsApplication.Name = "tabOngletsApplication";
@@ -1973,6 +1980,34 @@ namespace MediaTekDocuments.view
             this.btnReceptionRechercher.UseVisualStyleBackColor = true;
             this.btnReceptionRechercher.Click += new System.EventHandler(this.btnReceptionRechercher_Click);
             // 
+            // tabCommandeLivres
+            // 
+            this.tabCommandeLivres.Location = new System.Drawing.Point(4, 22);
+            this.tabCommandeLivres.Name = "tabCommandeLivres";
+            this.tabCommandeLivres.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCommandeLivres.Size = new System.Drawing.Size(875, 656);
+            this.tabCommandeLivres.TabIndex = 5;
+            this.tabCommandeLivres.Text = "Commander un livre";
+            this.tabCommandeLivres.UseVisualStyleBackColor = true;
+            // 
+            // tabCommandeDvd
+            // 
+            this.tabCommandeDvd.Location = new System.Drawing.Point(4, 22);
+            this.tabCommandeDvd.Name = "tabCommandeDvd";
+            this.tabCommandeDvd.Size = new System.Drawing.Size(875, 656);
+            this.tabCommandeDvd.TabIndex = 6;
+            this.tabCommandeDvd.Text = "Commander un DVD";
+            this.tabCommandeDvd.UseVisualStyleBackColor = true;
+            // 
+            // tabCommandeRevues
+            // 
+            this.tabCommandeRevues.Location = new System.Drawing.Point(4, 22);
+            this.tabCommandeRevues.Name = "tabCommandeRevues";
+            this.tabCommandeRevues.Size = new System.Drawing.Size(875, 656);
+            this.tabCommandeRevues.TabIndex = 7;
+            this.tabCommandeRevues.Text = "Commander une revue";
+            this.tabCommandeRevues.UseVisualStyleBackColor = true;
+            // 
             // FrmMediatek
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2184,6 +2219,9 @@ namespace MediaTekDocuments.view
         private System.Windows.Forms.ComboBox cmbRevuePublic;
         private System.Windows.Forms.ComboBox cmbRevueGenre;
         private System.Windows.Forms.NumericUpDown nudRevueDateMiseADispo;
+        private System.Windows.Forms.TabPage tabCommandeLivres;
+        private System.Windows.Forms.TabPage tabCommandeDvd;
+        private System.Windows.Forms.TabPage tabCommandeRevues;
     }
 }
 

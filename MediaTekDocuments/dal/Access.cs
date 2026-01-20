@@ -138,11 +138,11 @@ namespace MediaTekDocuments.dal
 
 
         /// <summary>
-        /// Retourne les exemplaires d'une revue
+        /// Retourne les exemplaires d'un document
         /// </summary>
-        /// <param name="idDocument">id de la revue concernée</param>
+        /// <param name="idDocument">id de la document concernée</param>
         /// <returns>Liste d'objets Exemplaire</returns>
-        public List<Exemplaire> GetExemplairesRevue(string idDocument)
+        public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
             String jsonIdDocument = convertToJson("id", idDocument);
             List<Exemplaire> lesExemplaires = TraitementRecup<Exemplaire>(GET, "exemplaire/" + jsonIdDocument, null);

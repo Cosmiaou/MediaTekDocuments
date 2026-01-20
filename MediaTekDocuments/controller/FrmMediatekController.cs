@@ -79,13 +79,13 @@ namespace MediaTekDocuments.controller
 
 
         /// <summary>
-        /// récupère les exemplaires d'une revue
+        /// récupère les exemplaires d'un document
         /// </summary>
-        /// <param name="idDocuement">id de la revue concernée</param>
+        /// <param name="idDocument">id de la document concernée</param>
         /// <returns>Liste d'objets Exemplaire</returns>
-        public List<Exemplaire> GetExemplairesRevue(string idDocuement)
+        public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
-            return access.GetExemplairesRevue(idDocuement);
+            return access.GetExemplairesDocument(idDocument);
         }
 
         /// <summary>
@@ -105,7 +105,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerLivre(Livre livre)
         {
-            if (GetExemplairesRevue(livre.Id).Count != 0)
+            if (GetExemplairesDocument(livre.Id).Count != 0)
             {
                 return false;
             } else
@@ -157,7 +157,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerDvd(Dvd dvd)
         {
-            if (GetExemplairesRevue(dvd.Id).Count != 0)
+            if (GetExemplairesDocument(dvd.Id).Count != 0)
             {
                 return false;
             }
@@ -174,7 +174,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerRevue(Revue revue)
         {
-            if (GetExemplairesRevue(revue.Id).Count != 0)
+            if (GetExemplairesDocument(revue.Id).Count != 0)
             {
                 return false;
             }
