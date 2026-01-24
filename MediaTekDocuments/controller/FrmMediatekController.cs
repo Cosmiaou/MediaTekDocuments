@@ -77,6 +77,15 @@ namespace MediaTekDocuments.controller
             return access.GetAllPublics();
         }
 
+        /// <summary>
+        /// getter sur les suivis
+        /// </summary>
+        /// <returns>Liste d 'objets Suivi</returns>
+        public List<Suivi> GetAllSuivis()
+        {
+            return access.GetAllSuivis();
+        }
+
 
         /// <summary>
         /// récupère les exemplaires d'un document
@@ -86,6 +95,42 @@ namespace MediaTekDocuments.controller
         public List<Exemplaire> GetExemplairesDocument(string idDocument)
         {
             return access.GetExemplairesDocument(idDocument);
+        }
+
+        /// <summary>
+        /// retourne une liste de commande en fonction de l'id du document et du type de document
+        /// </summary>
+        /// <param name="type">commande_dvd ou commande_livre</param>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<CommandeDocument> getCommandeDocument(string type, string id = null)
+        {
+            return access.getCommandeDocument(type, id);
+        }
+
+        /// <summary>
+        /// retourne une liste d'abonnement en fonction de l'id de la revue
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public List<Abonnement> getAbonnement(string id)
+        {
+            return access.getAbonnement(id);
+        }
+
+        public Livre GetLivre(string id)
+        {
+            return access.GetLivre(id);
+        }
+
+        public Dvd GetDvd(string id)
+        {
+            return access.GetDvd(id);
+        }
+
+        public Revue GetRevue(string id)
+        {
+            return access.GetRevue(id);
         }
 
         /// <summary>
@@ -105,7 +150,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerLivre(Livre livre)
         {
-            if (GetExemplairesDocument(livre.Id).Count != 0)
+            if (GetExemplairesDocument(livre.Id).Count != 0 || getCommandeDocument("commande_livre", livre.Id).Count != 0)
             {
                 return false;
             } else
@@ -149,6 +194,26 @@ namespace MediaTekDocuments.controller
             return access.ModifierRevue(revue);
         }
 
+        public bool AjouterCommande(CommandeDocumentDto cd)
+        {
+            return access.AjouterCommande(cd);
+        }
+
+        public bool SupprimerCommande(Commande cd)
+        {
+            return access.SupprimerCommande(cd);
+        }
+
+        public bool ModifierCommande(CommandeDocumentDto dto)
+        {
+            return access.UpdateCommande(dto);
+        }
+
+        public bool AjouterAbonnement(Abonnement abo)
+        {
+            return access.AjouterAbonnement(abo);
+        }
+
 
         /// <summary>
         /// Vérifie si des exemplaires ou des commandes sont rattachés à ce dvd
@@ -157,7 +222,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerDvd(Dvd dvd)
         {
-            if (GetExemplairesDocument(dvd.Id).Count != 0)
+            if (GetExemplairesDocument(dvd.Id).Count != 0 || getCommandeDocument("commande_dvd", dvd.Id).Count != 0)
             {
                 return false;
             }
@@ -174,7 +239,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerRevue(Revue revue)
         {
-            if (GetExemplairesDocument(revue.Id).Count != 0)
+            if (GetExemplairesDocument(revue.Id).Count != 0 || getAbonnement(revue.Id).Count != 0)
             {
                 return false;
             }
@@ -182,6 +247,15 @@ namespace MediaTekDocuments.controller
             {
                 return access.SupprRevue(revue);
             }
+        }
+
+        /// <summary>
+        /// Retourne une liste de tous les abonnements qui vont prochainement expirer
+        /// </summary>
+        /// <returns></returns>
+        public List<Abonnement> GetAbonnementsDate()
+        {
+            return access.GetAbonnementsDate();
         }
     }
 }

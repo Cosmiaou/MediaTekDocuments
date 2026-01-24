@@ -28,5 +28,10 @@ namespace MediaTekDocuments.model
             IdRayon = idRayon;
             Rayon = rayon;
         }
+
+        public override string ToString()
+        {
+            return Titre;
+        }
     }
 }
