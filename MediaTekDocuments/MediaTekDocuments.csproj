@@ -83,6 +83,7 @@
     <Reference Include="ZstdNet, Version=1.4.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controller\FrmAuthentificationController.cs" />
     <Compile Include="dto\CommandeDocumentDto.cs" />
     <Compile Include="dto\RevueDto.cs" />
     <Compile Include="dto\DvdDto.cs" />
@@ -91,9 +92,17 @@
     <Compile Include="controller\FrmMediatekController.cs" />
     <Compile Include="dal\Access.cs" />
     <Compile Include="model\Abonnement.cs" />
+    <Compile Include="model\Utilisateur.cs" />
+    <Compile Include="model\Service.cs" />
     <Compile Include="model\CommandeDocument.cs" />
     <Compile Include="model\Commande.cs" />
     <Compile Include="model\Suivi.cs" />
+    <Compile Include="view\FrmAuthentification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\FrmAuthentification.Designer.cs">
+      <DependentUpon>FrmAuthentification.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\FrmMediatek.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +131,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="view\FrmAuthentification.resx">
+      <DependentUpon>FrmAuthentification.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\FrmMediatek.resx">
       <DependentUpon>FrmMediatek.cs</DependentUpon>
     </EmbeddedResource>
@@ -139,6 +151,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

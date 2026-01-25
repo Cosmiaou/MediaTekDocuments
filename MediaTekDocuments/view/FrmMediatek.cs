@@ -23,22 +23,32 @@ namespace MediaTekDocuments.view
         private readonly BindingSource bdgGenres = new BindingSource();
         private readonly BindingSource bdgPublics = new BindingSource();
         private readonly BindingSource bdgRayons = new BindingSource();
+        private int user;
 
 
         /// <summary>
         /// Constructeur : création du contrôleur lié à ce formulaire
         /// </summary>
-        internal FrmMediatek()
+        internal FrmMediatek(int user)
         {
             InitializeComponent();
             this.controller = new FrmMediatekController();
-            autorisations();
+            this.user = user;
+            Autorisations(user);
             RemplirComboInfos();
             GestionPopup();
         }
 
+        /// <summary>
+        /// Si l'utilisateur fait parti du service administratif ou est administrateur, affiche une notification indiquant les abonnements qui vont prochainement expirer.
+        /// </summary>
         private void GestionPopup()
         {
+            if(user < 3)
+            {
+                return;
+            }
+
             List<Abonnement> abonnements = controller.GetAbonnementsDate();
             if (abonnements != null)
             {
@@ -70,16 +80,41 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// En fonction des droits des utilisateurs, verrouille ou deverrouille des options.
-        /// Code provisoire
+        /// En fonction des droits des utilisateurs, verrouille ou deverrouille des options
         /// </summary>
-        private void autorisations()
+        private void Autorisations(int user)
         {
-            btnAjouterDvd.Enabled = true;
-            btnAddLivre.Enabled = true;
-            btnAddRevue.Enabled = true;
-
+            if (user < 3)
+            {
+                AutorisationPrets();
+            }
         }
+
+        /// <summary>
+        /// Pour les utilisateurs du service Prêts. Masque tous les boutons de modifications, les obglets de commande et d'abonnement, ainsi que d'ajout d'exemplaires
+        /// </summary>
+        private void AutorisationPrets()
+        {
+            btnAjouterDvd.Visible = false;
+            btnModifDvd.Visible = false;
+            btnSupprDvd.Visible = false;
+            btnEnregistrerDVD.Visible = false;
+            btnAddLivre.Visible = false;
+            btnModifLivre.Visible = false;
+            btnSupprLivre.Visible = false;
+            btnEnregistrerLivre.Visible = false;
+            btnAddRevue.Visible = false;
+            btnModifRevue.Visible = false;
+            btnSupprRevue.Visible = false;
+            btnEnregisterRevue.Visible = false;
+
+            grpReceptionExemplaire.Visible = false;
+            tabOngletsApplication.TabPages.Remove(tabCommandeDvd);
+            tabOngletsApplication.TabPages.Remove(tabCommandeLivres);
+            tabOngletsApplication.TabPages.Remove(tabCommandeRevues);
+        }
+
+
 
         /// <summary>
         /// Rempli les 3 combobox de chaque grpInfos
@@ -2119,7 +2154,7 @@ namespace MediaTekDocuments.view
             Abonnement abonnement = (Abonnement)dgvAbonnementRevue.CurrentRow.DataBoundItem;
             List<Exemplaire> exemplaires = (controller.GetExemplairesDocument(abonnement.IdRevue));
             foreach (Exemplaire exemplaire in exemplaires) {
-                if (ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaire.DateAchat))
+                if (controller.ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaire.DateAchat))
                 {
                     MessageBox.Show("Un abonnement à une revue ne peut pas être supprimé si des exemplaires y sont rattachés.");
                     return;
@@ -2131,24 +2166,7 @@ namespace MediaTekDocuments.view
             btnAbonnementRecherche_Click(null, null);
         }
 
-        /// <summary>
-        /// Si la date de parution indiqué est située entre la date de la commande et la date de fin, retourne vrai. Sinon, retourne faux
-        /// </summary>
-        /// <param name="dateCommande"></param>
-        /// <param name="dateFin"></param>
-        /// <param name="dateParution"></param>
-        /// <returns>boolean</returns>
-        private bool ParutionDansAbonnement(DateTime dateCommande, DateTime dateFin, DateTime dateParution)
-        {
-            if (dateParution > dateCommande && dateParution < dateFin)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        
 
         private void btnAbonnementValider_Click(object sender, EventArgs e)
         {

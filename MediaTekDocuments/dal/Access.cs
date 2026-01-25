@@ -9,6 +9,8 @@ using System.Configuration;
 using System.Linq;
 using MediaTekDocuments.dto;
 using System.Xml.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MediaTekDocuments.dal
 {
@@ -466,6 +468,23 @@ namespace MediaTekDocuments.dal
             return null;
         }
 
+        /// <summary>
+        /// Hash le mot de passe avant de demander à l'API si un compte ayant le même MDP et le même login existe. Si oui
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="mdp"></param>
+        /// <returns></returns>
+        public List<Utilisateur> ControleAuthentification(string login, string mdp)
+        {
+            string mdpHash = sha256_hash(mdp);
+            Utilisateur user = new Utilisateur(0, login, mdpHash, 0);
+            String jsonUser = JsonConvert.SerializeObject(user);
+            Console.WriteLine(jsonUser);
+
+            List<Utilisateur> users = TraitementRecup<Utilisateur>(GET, "utilisateur_check/" + jsonUser, null);
+            return users;
+        }
+
         #endregion
         #region Traitement
 
@@ -551,6 +570,30 @@ namespace MediaTekDocuments.dal
                 serializer.Serialize(writer, value);
             }
         }
+
+        /// <summary>
+        /// Méthode hashant une string avec l'algorithme Sha256
+        /// méthode trouvée sur le site :
+        /// https://stackoverflow.com/questions/16999361/obtain-sha-256-string-of-a-string
+        /// </summary>
+        /// <param name="value">string à convertir</param>
+        /// <returns>string hashée</returns>
+        public static String sha256_hash(string value)
+        {
+            StringBuilder Sb = new StringBuilder();
+
+            using (var hash = SHA256.Create())
+            {
+                Encoding enc = Encoding.UTF8;
+                byte[] result = hash.ComputeHash(enc.GetBytes(value));
+
+                foreach (byte b in result)
+                    Sb.Append(b.ToString("x2"));
+            }
+
+            return Sb.ToString();
+        }
+
         #endregion
     }
 }

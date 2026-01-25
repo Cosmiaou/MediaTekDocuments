@@ -2,6 +2,7 @@
 using MediaTekDocuments.model;
 using MediaTekDocuments.dal;
 using MediaTekDocuments.dto;
+using System;
 
 namespace MediaTekDocuments.controller
 {
@@ -256,6 +257,25 @@ namespace MediaTekDocuments.controller
         public List<Abonnement> GetAbonnementsDate()
         {
             return access.GetAbonnementsDate();
+        }
+
+        /// <summary>
+        /// Si la date de parution indiqué est située entre la date de la commande et la date de fin, retourne vrai. Sinon, retourne faux
+        /// </summary>
+        /// <param name="dateCommande"></param>
+        /// <param name="dateFin"></param>
+        /// <param name="dateParution"></param>
+        /// <returns>boolean</returns>
+        public bool ParutionDansAbonnement(DateTime dateCommande, DateTime dateFin, DateTime dateParution)
+        {
+            if (dateParution > dateCommande && dateParution < dateFin)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
