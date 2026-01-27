@@ -11,6 +11,7 @@ using MediaTekDocuments.dto;
 using System.Xml.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Serilog;
 
 namespace MediaTekDocuments.dal
 {
@@ -56,12 +57,18 @@ namespace MediaTekDocuments.dal
             String authenticationString;
             try
             {
+                Log.Logger = new LoggerConfiguration()
+                    .MinimumLevel.Verbose()
+                    .WriteTo.Console()
+                    .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
+                    .CreateLogger();
                 authenticationString = "apiadmin:";
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                Log.Fatal(e, "Erreur lors de l'initialisation d'accès.");
                 Environment.Exit(0);
             }
         }
@@ -229,7 +236,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la création de l'exemplaire. Champs = {0}", jsonExemplaire);
             }
             return false;
         }
@@ -249,7 +256,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la suppression du livre. Champs = {0}", jsonLivre);
             }
             return false;
         }
@@ -269,7 +276,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la création du livre. Champs = {0}", jsonLivre);
             }
             return false;
         }
@@ -284,7 +291,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la modification du livre. Champs = {0}", jsonLivre);
             }
             return false;
         }
@@ -304,7 +311,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la suppression du DVD. Champs = {0}", jsonDvd);
             }
             return false;
         }
@@ -319,7 +326,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la création du DVD. Champs = {0}", jsonDvd);
             }
             return false;
         }
@@ -334,7 +341,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la modification du DVD. Champs = {0}", jsonDvd);
             }
             return false;
         }
@@ -354,7 +361,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la suppression de la revue. Champs = {0}", jsonRevue);
             }
             return false;
         }
@@ -369,7 +376,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la création de la revue. Champs = {0}", jsonRevue);
             }
             return false;
         }
@@ -384,7 +391,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la modification de la revue. Champs = {0}", jsonRevue);
             }
             return false;
         }
@@ -399,7 +406,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de l'ajout de la commande. Champs = {0}", jsonCommande);
             }
             return false;
         }
@@ -414,7 +421,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la suppression de la commande. Champs = {0}", jsonCommande);
             }
             return false;
         }
@@ -430,7 +437,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la modification de la commande. Champs = {0}", jsonDto);
             }
             return false;
         }
@@ -445,7 +452,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de l'ajout de la commande. Champs = {0}", jsonAbonnement);
             }
             return false;
         }
@@ -463,7 +470,7 @@ namespace MediaTekDocuments.dal
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Log.Error(ex, "Erreur lors de la récupération des abonnements");
             }
             return null;
         }
@@ -511,19 +518,19 @@ namespace MediaTekDocuments.dal
                     if (methode.Equals(GET))
                     {
                         String resultString = JsonConvert.SerializeObject(retour["result"]);
-                        Console.WriteLine(resultString);
+                        Log.Information("Récupération du contenu de la requête : {0}", resultString);
                         // construction de la liste d'objets à partir du retour de l'api
                         liste = JsonConvert.DeserializeObject<List<T>>(resultString, new CustomBooleanJsonConverter());
                     }
                 }
                 else
                 {
-                    Console.WriteLine("code erreur = " + code + " message = " + (String)retour["message"]);
+                    Log.Error("Erreur dans l'exécution de la requête : paramètres : {0} ; code erreur : {1} ; message : {2}", parametres, code, (String)retour["message"]);
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine("Erreur lors de l'accès à l'API : " + e.Message);
+                Log.Fatal(e, "Erreur lors de l'accès à l'API : {0}", e.Message);
                 Environment.Exit(0);
             }
             return liste;
