@@ -104,9 +104,9 @@ namespace MediaTekDocuments.controller
         /// <param name="type">commande_dvd ou commande_livre</param>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<CommandeDocument> getCommandeDocument(string type, string id = null)
+        public List<CommandeDocument> GetCommandeDocument(string type, string id = null)
         {
-            return access.getCommandeDocument(type, id);
+            return access.GetCommandeDocument(type, id);
         }
 
         /// <summary>
@@ -114,9 +114,9 @@ namespace MediaTekDocuments.controller
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Abonnement> getAbonnement(string id)
+        public List<Abonnement> GetAbonnement(string id)
         {
-            return access.getAbonnement(id);
+            return access.GetAbonnement(id);
         }
 
         public Livre GetLivre(string id)
@@ -151,7 +151,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerLivre(Livre livre)
         {
-            if (GetExemplairesDocument(livre.Id).Count != 0 || getCommandeDocument("commande_livre", livre.Id).Count != 0)
+            if (GetExemplairesDocument(livre.Id).Count != 0 || GetCommandeDocument("commande_livre", livre.Id).Count != 0)
             {
                 return false;
             } else
@@ -223,7 +223,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerDvd(Dvd dvd)
         {
-            if (GetExemplairesDocument(dvd.Id).Count != 0 || getCommandeDocument("commande_dvd", dvd.Id).Count != 0)
+            if (GetExemplairesDocument(dvd.Id).Count != 0 || GetCommandeDocument("commande_dvd", dvd.Id).Count != 0)
             {
                 return false;
             }
@@ -240,7 +240,7 @@ namespace MediaTekDocuments.controller
         /// <returns>true si la suppression a fonctionnée. False le cas échéant</returns>
         public bool SupprimerRevue(Revue revue)
         {
-            if (GetExemplairesDocument(revue.Id).Count != 0 || getAbonnement(revue.Id).Count != 0)
+            if (GetExemplairesDocument(revue.Id).Count != 0 || GetAbonnement(revue.Id).Count != 0)
             {
                 return false;
             }

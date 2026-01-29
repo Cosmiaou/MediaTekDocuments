@@ -45,7 +45,7 @@ namespace MediaTekDocuments.view
             }
 
 
-            List<Utilisateur> users = controller.controleAuthentification(txbLogin.Text, txbPassword.Text);
+            List<Utilisateur> users = controller.ControleAuthentification(txbLogin.Text, txbPassword.Text);
 
             if (users.Count == 0)
             {

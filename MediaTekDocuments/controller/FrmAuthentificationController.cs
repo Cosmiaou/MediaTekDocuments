@@ -29,7 +29,7 @@ namespace MediaTekDocuments.controller
         /// <param name="login"></param>
         /// <param name="mdp"></param>
         /// <returns></returns>
-        public List<Utilisateur> controleAuthentification(string login, string mdp)
+        public List<Utilisateur> ControleAuthentification(string login, string mdp)
         {
             return access.ControleAuthentification(login, mdp);
         }
