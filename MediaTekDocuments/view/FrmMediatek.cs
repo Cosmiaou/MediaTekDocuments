@@ -2154,7 +2154,7 @@ namespace MediaTekDocuments.view
             List<Exemplaire> exemplaires = (controller.GetExemplairesDocument(abonnement.IdRevue));
 
             if (exemplaires.Exists(exemplaire =>
-                controller.ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaire.DateAchat)))
+                FrmMediatekController.ParutionDansAbonnement(abonnement.DateCommande, abonnement.DateFinAbonnement, exemplaire.DateAchat)))
             {
                 MessageBox.Show("Un abonnement à une revue ne peut pas être supprimé si des exemplaires y sont rattachés.");
                 return;

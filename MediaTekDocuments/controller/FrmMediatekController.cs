@@ -9,7 +9,7 @@ namespace MediaTekDocuments.controller
     /// <summary>
     /// Contrôleur lié à FrmMediatek
     /// </summary>
-    class FrmMediatekController
+    public class FrmMediatekController
     {
         /// <summary>
         /// Objet d'accès aux données
@@ -266,9 +266,9 @@ namespace MediaTekDocuments.controller
         /// <param name="dateFin"></param>
         /// <param name="dateParution"></param>
         /// <returns>boolean</returns>
-        public bool ParutionDansAbonnement(DateTime dateCommande, DateTime dateFin, DateTime dateParution)
+        public static bool ParutionDansAbonnement(DateTime dateCommande, DateTime dateFin, DateTime dateParution)
         {
-            if (dateParution > dateCommande && dateParution < dateFin)
+            if (dateParution >= dateCommande && dateParution <= dateFin)
             {
                 return true;
             }
