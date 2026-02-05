@@ -118,17 +118,31 @@ namespace MediaTekDocuments.controller
         {
             return access.GetAbonnement(id);
         }
-
+        /// <summary>
+        /// Retourne le livre en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Livre GetLivre(string id)
         {
             return access.GetLivre(id);
         }
 
+        /// <summary>
+        /// retourne le dvd en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Dvd GetDvd(string id)
         {
             return access.GetDvd(id);
         }
 
+        /// <summary>
+        /// retourne une revue en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Revue GetRevue(string id)
         {
             return access.GetRevue(id);
@@ -170,51 +184,96 @@ namespace MediaTekDocuments.controller
             return access.CreerLivre(livre);
         }
 
+        /// <summary>
+        /// Modifie le livre envoyé
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns></returns>
         public bool ModifierLivre(LivreDto livre)
         {
             return access.ModifierLivre(livre);
         }
 
+
+        /// <summary>
+        /// Crée un dvd dans la bdd
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
         public bool CreerDvd(DvdDto dvd)
         {
             return access.CreerDvd(dvd);
         }
 
+        /// <summary>
+        /// Modifie le dvd en fonction de celui envoyé
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
         public bool ModifierDvd(DvdDto dvd)
         {
             return access.ModifierDvd(dvd);
         }
 
+        /// <summary>
+        /// crée une revue dans la bdd
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns></returns>
         public bool CreerRevue(RevueDto revue)
         {
             return access.CreerRevue(revue);
         }
 
+        /// <summary>
+        /// modifie une revue  en fonction de celle envoyée
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns></returns>
         public bool ModifierRevue(RevueDto revue)
         {
             return access.ModifierRevue(revue);
         }
-
+        
+        /// <summary>
+        /// Crée une nouvelle commande de dvd ou de livre
+        /// </summary>
+        /// <param name="cd"></param>
+        /// <returns></returns>
         public bool AjouterCommande(CommandeDocumentDto cd)
         {
             return access.AjouterCommande(cd);
         }
 
+        /// <summary>
+        /// Supprime une commande de dvd ou de livre
+        /// </summary>
+        /// <param name="cd"></param>
+        /// <returns></returns>
         public bool SupprimerCommande(Commande cd)
         {
             return access.SupprimerCommande(cd);
         }
 
+        /// <summary>
+        /// Modifie l'état de suivi d'une commande
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public bool ModifierCommande(CommandeDocumentDto dto)
         {
             return access.UpdateCommande(dto);
         }
 
+        /// <summary>
+        /// Ajoute un abonnement à la bdd
+        /// </summary>
+        /// <param name="abo"></param>
+        /// <returns></returns>
         public bool AjouterAbonnement(Abonnement abo)
         {
             return access.AjouterAbonnement(abo);
         }
-
 
         /// <summary>
         /// Vérifie si des exemplaires ou des commandes sont rattachés à ce dvd

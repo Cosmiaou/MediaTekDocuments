@@ -3,7 +3,7 @@
 namespace MediaTekDocuments.model
 {
     /// <summary>
-    /// Classe métier Exemplaire (exemplaire d'une revue)
+    /// Classe métier Exemplaire (exemplaire d'une revue, d'un livre ou d'un dvd)
     /// </summary>
     public class Exemplaire
     {
@@ -13,6 +13,14 @@ namespace MediaTekDocuments.model
         public string IdEtat { get; set; }
         public string Id { get; set; }
 
+        /// <summary>
+        /// Constructeur
+        /// </summary>
+        /// <param name="numero"></param>
+        /// <param name="dateAchat"></param>
+        /// <param name="photo"></param>
+        /// <param name="idEtat"></param>
+        /// <param name="idDocument"></param>
         public Exemplaire(int numero, DateTime dateAchat, string photo, string idEtat, string idDocument)
         {
             this.Numero = numero;

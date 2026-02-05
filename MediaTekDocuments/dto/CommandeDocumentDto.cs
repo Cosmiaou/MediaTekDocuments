@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace MediaTekDocuments.dto
 {
+    /// <summary>
+    /// Objet de transfert de données
+    /// </summary>
     public class CommandeDocumentDto
     {
         public string Id { get; set; }

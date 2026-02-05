@@ -2,7 +2,7 @@
 namespace MediaTekDocuments.model
 {
     /// <summary>
-    /// Classe métier LivreDvd hérite de Document
+    /// Classe métier abstraite LivreDvd hérite de Document
     /// </summary>
     public abstract class LivreDvd : Document
     {

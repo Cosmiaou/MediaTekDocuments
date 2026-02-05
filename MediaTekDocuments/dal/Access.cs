@@ -160,6 +160,11 @@ namespace MediaTekDocuments.dal
             return lesSuivis;
         }
 
+        /// <summary>
+        /// Retourne un livre en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Livre GetLivre(string id)
         {
             String jsonIdDocument = ConvertToJson("id", id);
@@ -167,6 +172,11 @@ namespace MediaTekDocuments.dal
             return livres[0];
         }
 
+        /// <summary>
+        /// retourne un dvd en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Dvd GetDvd(string id)
         {
             String jsonIdDocument = ConvertToJson("id", id);
@@ -175,13 +185,17 @@ namespace MediaTekDocuments.dal
             return dvd[0];
         }
 
+        /// <summary>
+        /// retourne une revue en fonction de son id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Revue GetRevue(string id)
         {
             String jsonIdDocument = ConvertToJson("id", id);
             List<Revue> revue = TraitementRecup<Revue>(GET, "revue/" + jsonIdDocument, null);
             return revue[0];
         }
-
 
         /// <summary>
         /// Retourne les exemplaires d'un document
@@ -221,13 +235,13 @@ namespace MediaTekDocuments.dal
         }
 
         #endregion
-            #region Modifications
+        #region Modifications
 
-            /// <summary>
-            /// ecriture d'un exemplaire en base de données
-            /// </summary>
-            /// <param name="exemplaire">exemplaire à insérer</param>
-            /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
+        /// <summary>
+        /// ecriture d'un exemplaire en base de données
+        /// </summary>
+        /// <param name="exemplaire">exemplaire à insérer</param>
+        /// <returns>true si l'insertion a pu se faire (retour != null)</returns>
         public bool CreerExemplaire(Exemplaire exemplaire)
         {
             String jsonExemplaire = JsonConvert.SerializeObject(exemplaire, new CustomDateTimeConverter());
@@ -282,7 +296,12 @@ namespace MediaTekDocuments.dal
             }
             return false;
         }
-        
+
+        /// <summary>
+        /// Modifie un livre dans la bdd  en fonction de son id
+        /// </summary>
+        /// <param name="livre"></param>
+        /// <returns></returns>
         public bool ModifierLivre(LivreDto livre)
         {
             String jsonLivre = JsonConvert.SerializeObject(livre);
@@ -318,6 +337,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// crée un nouveau dvd dans la bdd
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
         public bool CreerDvd(DvdDto dvd)
         {
             String jsonDvd = JsonConvert.SerializeObject(dvd);
@@ -333,6 +357,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// modifie un dvd dans la bdd  en fonction de son id
+        /// </summary>
+        /// <param name="dvd"></param>
+        /// <returns></returns>
         public bool ModifierDvd(DvdDto dvd)
         {
             String jsonDvd = JsonConvert.SerializeObject(dvd);
@@ -368,6 +397,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// crée une revue dans la bdd
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns></returns>
         public bool CreerRevue(RevueDto revue)
         {
             String jsonRevue = JsonConvert.SerializeObject(revue);
@@ -383,6 +417,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// Modifie une revue dans la bdd
+        /// </summary>
+        /// <param name="revue"></param>
+        /// <returns></returns>
         public bool ModifierRevue(RevueDto revue)
         {
             String jsonRevue = JsonConvert.SerializeObject(revue);
@@ -398,6 +437,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// Ajoute une commande de livre ou de dvd dans la bdd
+        /// </summary>
+        /// <param name="cd"></param>
+        /// <returns></returns>
         public bool AjouterCommande(CommandeDocumentDto cd)
         {
             String jsonCommande = JsonConvert.SerializeObject(cd, new CustomDateTimeConverter());
@@ -413,6 +457,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// Supprime une commande dans la bdd
+        /// </summary>
+        /// <param name="cd"></param>
+        /// <returns></returns>
         public bool SupprimerCommande(Commande cd)
         {
             String jsonCommande = ConvertToJson("id", cd.Id);
@@ -428,7 +477,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
-
+        /// <summary>
+        /// Met à jour une commande dans la bdd en fonction de son id
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
         public bool UpdateCommande(CommandeDocumentDto dto)
         {
             String jsonDto = JsonConvert.SerializeObject(dto, new CustomDateTimeConverter());
@@ -444,6 +497,11 @@ namespace MediaTekDocuments.dal
             return false;
         }
 
+        /// <summary>
+        /// Ajoute un abonnement à la BDD
+        /// </summary>
+        /// <param name="abo"></param>
+        /// <returns></returns>
         public bool AjouterAbonnement(Abonnement abo)
         {
             String jsonAbonnement = JsonConvert.SerializeObject(abo, new CustomDateTimeConverter());

@@ -14,7 +14,7 @@ namespace MediaTekDocuments.view
 
 {
     /// <summary>
-    /// Classe d'affichage
+    /// Classe d'affichage de la frame principale
     /// </summary>
     public partial class FrmMediatek : Form
     {
@@ -42,7 +42,8 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Si l'utilisateur fait parti du service administratif ou est administrateur, affiche une notification indiquant les abonnements qui vont prochainement expirer.
+        /// Si l'utilisateur fait parti du service administratif ou est administrateur, affiche une notification indiquant les 
+        /// abonnements qui vont prochainement expirer.
         /// </summary>
         private void GestionPopup()
         {
@@ -465,6 +466,11 @@ namespace MediaTekDocuments.view
             btnSupprLivre.Enabled = parametre;
         }
 
+        /// <summary>
+        /// Permet la modification d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifLivre_Click(object sender, EventArgs e)
         {
             grpLivresRecherche.Enabled = false;
@@ -507,6 +513,11 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Permet l'ajout d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddLivre_Click(object sender, EventArgs e)
         {
             ActivationBoutonLivre(false);
@@ -517,6 +528,12 @@ namespace MediaTekDocuments.view
             modificationLivre = false;
         }
 
+        /// <summary>
+        /// Si les champs sont correctement remplis, demande confirmation et crée un Dto et demande l'ajout à la BdD.
+        /// Vide les champs de modification et recharge la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEnregistrerLivre_Click(object sender, EventArgs e)
         {
             Categorie genre = cmbLivresGenre.SelectedItem as Categorie;
@@ -555,6 +572,11 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Après confirmation, vide et verrouille les champs de modification ou d'ajout d'un livre
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAnnulerLivre_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Voulez-vous annulez cette modification ?", CONFIRMATION, MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -931,6 +953,11 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Permet la modification d'un dvd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifDvd_Click(object sender, EventArgs e)
         {
             ActivationBoutonDvd(false);
@@ -940,6 +967,11 @@ namespace MediaTekDocuments.view
             modificatioNDvd = true;
         }
 
+        /// <summary>
+        /// Permet l'ajout d'un dvd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAjouterDvd_Click(object sender, EventArgs e)
         {
             ActivationBoutonDvd(false);
@@ -950,6 +982,12 @@ namespace MediaTekDocuments.view
             modificatioNDvd = false;
         }
 
+        /// <summary>
+        /// Si les champs sont correctement remplis, demande confirmation et crée un Dto et demande l'ajout à la BdD.
+        /// Vide les champs de modification et recharge la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEnregistrerDVD_Click(object sender, EventArgs e)
         {
             Categorie genre = cmbDvdGenre.SelectedItem as Categorie;
@@ -989,6 +1027,11 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Après confirmation, vide et verrouille les champs de mofication d'un dvd
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAnnulerDVD_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Voulez-vous annulez cette modification ?", CONFIRMATION, MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -1317,7 +1360,12 @@ namespace MediaTekDocuments.view
             }
             RemplirRevuesListe(sortedList);
         }
-
+        /// <summary>
+        /// Vérifie si un élement est sélectionné dans la liste. Si oui, demande confirmation à l'utilisateur et supprime l'élement.
+        /// Recharge ensuite la liste.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnSupprRevue_Click(object sender, EventArgs e)
         {
             if (dgvRevuesListe.CurrentCell != null)
@@ -1347,12 +1395,21 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Active ou désactive les boutons de suppression et de modification d'une revue
+        /// </summary>
+        /// <param name="parametre"></param>
         private void ActivationBoutonRevue(bool parametre)
         {
             btnSupprRevue.Enabled = parametre;
             btnModifRevue.Enabled = parametre;
         }
 
+        /// <summary>
+        /// Permet la modification d'une revue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnModifRevue_Click(object sender, EventArgs e)
         {
             ActivationBoutonRevue(false);
@@ -1362,6 +1419,11 @@ namespace MediaTekDocuments.view
             modifierRevue = true;
         }
 
+        /// <summary>
+        /// Permet l'ajout d'une revue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAddRevue_Click(object sender, EventArgs e)
         {
             ActivationBoutonRevue(false);
@@ -1372,6 +1434,11 @@ namespace MediaTekDocuments.view
             modifierRevue = false;
         }
 
+        /// <summary>
+        /// Demande confirmation, puis vide et verrouille les champs de mdoifcation de la revue
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAnnulerRevue_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Voulez-vous annulez cette modification ?", CONFIRMATION, MessageBoxButtons.YesNo) == DialogResult.Yes)
@@ -1385,6 +1452,12 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Si les champs sont correctement remplis, demande confirmation et crée un Dto et demande l'ajout à la BdD.
+        /// Vide les champs de modification et recharge la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEnregisterRevue_Click(object sender, EventArgs e)
         {
             Categorie genre = cmbRevueGenre.SelectedItem as Categorie;
@@ -1692,6 +1765,9 @@ namespace MediaTekDocuments.view
             RemplirCmbLivresCommande();
         }
 
+        /// <summary>
+        /// Vide les champs décrivant le livre commandé
+        /// </summary>
         private void ViderChampsLivresCommande()
         {
             txbLivresCommandeAuteur.Text = "";
@@ -1711,6 +1787,10 @@ namespace MediaTekDocuments.view
             txbLivresCommandeNumero.Text = "";
         }
 
+        /// <summary>
+        /// Rempli le Dgv avec les informations de la commande
+        /// </summary>
+        /// <param name="commandes"></param>
         private void RemplirDgvLivresCommande(List<CommandeDocument> commandes)
         {
             dgvLivresCommandes.DataSource = commandes;
@@ -1726,6 +1806,10 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Rempli les champs d'informations sur le livre concerné par la commande
+        /// </summary>
+        /// <param name="livre"></param>
         private void RemplirChampsLivresCommande(Livre livre)
         {
             txbLivresCommandeAuteur.Text = livre.Auteur;
@@ -1738,6 +1822,9 @@ namespace MediaTekDocuments.view
             txbLivresCommandeTitre.Text = livre.Titre;
         }
 
+        /// <summary>
+        /// Rempli les comboBox de livres ou de suivis
+        /// </summary>
         private void RemplirCmbLivresCommande()
         {
             List<Livre> livres = controller.GetAllLivres();
@@ -1745,6 +1832,11 @@ namespace MediaTekDocuments.view
             cmbLivresCommandeSuivi.DataSource = lesSuivis;
         }
 
+        /// <summary>
+        /// Rempli le dgv avec les commandes du livre dont l'id est indiqué par l'utilisateur
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLivresCommandeRechercher_Click(object sender, EventArgs e)
         {
             dgvLivresCommandes.DataSource = null;
@@ -1754,7 +1846,12 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Demande confirmation
+        /// Demande confirmation, puis vérifie si la modification du Suivi respecte un certain nombre de règle. Si oui, demande la modification
+        /// Retourne une erreur si : une commande livrée ou réglée retourne à une étape inférieure ; aucune étape de suivi n'est indiquée ;
+        /// une commande passe au statut réglée avant d'être passée par "livrée".
+        /// Se termine par une etiquette fin, à laquelle on est envoyée par des goto depuis les erreurs, ou qu'on rencontre naturellement
+        /// en cas de fonctionnement normal. Les goto ne sont normalement pas recommandés en 2026, mais j'estime que ça ne pose aucun 
+        /// problème de lisibilité ici
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -1806,6 +1903,11 @@ namespace MediaTekDocuments.view
             cmbLivresCommandeSuivi.SelectedIndex = -1;
         }
 
+        /// <summary>
+        /// Vérifie si les champs sont remplis, crée un Dto pour la commande, puis l'ajoute
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLivresCommandeValidation_Click(object sender, EventArgs e)
         {
             string id = txbLivresCommandeNumero.Text;
@@ -1903,6 +2005,9 @@ namespace MediaTekDocuments.view
             RemplirCmbDvdCommande();
         }
 
+        /// <summary>
+        /// Vide les champs montrant les informations du dvd
+        /// </summary>
         private void ViderChampsDvdCommande()
         {
             txbDvdCommandeRealisateur.Text = "";
@@ -1922,6 +2027,10 @@ namespace MediaTekDocuments.view
             txbDvdCommandeNumero.Text = "";
         }
 
+        /// <summary>
+        /// Rempli le dgv des informations de la commande
+        /// </summary>
+        /// <param name="commandes"></param>
         private void RemplirDgvDvdCommande(List<CommandeDocument> commandes)
         {
             dgvDvdCommande.DataSource = commandes;
@@ -1937,6 +2046,10 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Rempli les champs en fonction des informations du dvd de la commande sélectionnée
+        /// </summary>
+        /// <param name="dvd"></param>
         private void RemplirChampsDvdCommande(Dvd dvd)
         {
             txbDvdCommandeRealisateur.Text = dvd.Realisateur;
@@ -1949,6 +2062,9 @@ namespace MediaTekDocuments.view
             rtbDvdCommandeSynopsis.Text = dvd.Synopsis;
         }
 
+        /// <summary>
+        /// Rempli les cmb de listes de dvd ou de suivi
+        /// </summary>
         private void RemplirCmbDvdCommande()
         {
             List<Dvd> dvd = controller.GetAllDvd();
@@ -1956,6 +2072,11 @@ namespace MediaTekDocuments.view
             cmbDvdCommandeSuivi.DataSource = lesSuivis;
         }
 
+        /// <summary>
+        /// Permet la modification d'une commande
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDvdCommandeModifier_Click(object sender, EventArgs e)
         {
             if (dgvDvdCommande.CurrentRow == null)
@@ -1969,6 +2090,12 @@ namespace MediaTekDocuments.view
             txbDvdCommandeSuivi.Text = txbDvdCommandeTitre.Text;
         }
 
+        /// <summary>
+        /// Après confirmation, vérifie si la CommandeDocument est au stade "livrée" (3). Si oui, affiche une erreur. Si non, supprime la commande.
+        /// Si aucun item n'est sélectionné ou si l'utilisateur répond "non", il ne se passe rien.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDvdCommandeSupprimer_Click(object sender, EventArgs e)
         {
             if (dgvDvdCommande.CurrentRow == null)
@@ -1991,6 +2118,11 @@ namespace MediaTekDocuments.view
             }
         }
         
+        /// <summary>
+        /// Rempli le dgv et les champs en fonction du dvd recherchée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDvdCommandeRecherche_Click(object sender, EventArgs e)
         {
             dgvDvdCommande.DataSource = null;
@@ -1999,6 +2131,11 @@ namespace MediaTekDocuments.view
             RemplirChampsDvdCommande(controller.GetDvd(id));
         }
 
+        /// <summary>
+        /// Controle que les champs soient bien remplis, crée un dto, puis ajoute la commande à la BdD et recharge les champs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDvdCommandeValiderCommande_Click(object sender, EventArgs e)
         {
             string id = txbDvdCommandeId.Text;
@@ -2034,6 +2171,16 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Demande confirmation, puis vérifie si la modification du Suivi respecte un certain nombre de règle. Si oui, demande la modification
+        /// Retourne une erreur si : une commande livrée ou réglée retourne à une étape inférieure ; aucune étape de suivi n'est indiquée ;
+        /// une commande passe au statut réglée avant d'être passée par "livrée".
+        /// Se termine par une etiquette fin, à laquelle on est envoyée par des goto depuis les erreurs, ou qu'on rencontre naturellement
+        /// en cas de fonctionnement normal. Les goto ne sont normalement pas recommandés en 2026, mais j'estime que ça ne pose aucun 
+        /// problème de lisibilité ici
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnDvdCommandeValiderSuivi_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Voulez-vous vraiment modifier l'état de cette commande ? Il ne sera pas possible de revenir sur cette décision.", CONFIRMATION, MessageBoxButtons.YesNo) == DialogResult.No)
@@ -2088,12 +2235,22 @@ namespace MediaTekDocuments.view
 
         #region Abonnement
 
+        /// <summary>
+        /// Charge la page de gestion des abonnements (tabCommandeRevues)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tabCommandeRevues_Enter(object sender, EventArgs e)
         {
             ViderChampsAbonnement();
             cmbAbonnementRevue.DataSource = controller.GetAllRevues();
         }
 
+        /// <summary>
+        /// Rempli les champs et le dgv des informations des abonnements de la revue souhaitée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAbonnementRecherche_Click(object sender, EventArgs e)
         {
             dgvAbonnementRevue.DataSource = null;
@@ -2102,6 +2259,10 @@ namespace MediaTekDocuments.view
             RemplirChampsAbonnement(controller.GetRevue(id));
         }
 
+        /// <summary>
+        /// Rempli le dgv en fonction d'une liste d'abonnements
+        /// </summary>
+        /// <param name="abonnements"></param>
         private void RemplirDgvAbonnement(List<Abonnement> abonnements)
         {
             dgvAbonnementRevue.DataSource = abonnements;
@@ -2116,6 +2277,10 @@ namespace MediaTekDocuments.view
             }
         }
 
+        /// <summary>
+        /// Rempli les champs des informations de la revue dont l'utilisateur demande les abonnements
+        /// </summary>
+        /// <param name="revue"></param>
         private void RemplirChampsAbonnement(Revue revue)
         {
             txbAbonnementDelai.Text = revue.DelaiMiseADispo.ToString();
@@ -2127,6 +2292,9 @@ namespace MediaTekDocuments.view
             txbAbonnementTitre.Text = revue.Titre;
         }
 
+        /// <summary>
+        /// Vide les champs de la revue
+        /// </summary>
         private void ViderChampsAbonnement()
         {
             txbAbonnementDelai.Text = "";
@@ -2143,6 +2311,12 @@ namespace MediaTekDocuments.view
             nudAbonnementMontant.Value = 0;
         }
 
+        /// <summary>
+        /// Vérifie si un abonnement est sélectionné, et demande confirmation. Appelle controller.ParutionDansAbonnement() pour vérifier
+        /// si un exemplaire est lié à l'abonnement. Si non, le supprime et recharge les abonnements
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAbonnementSupprimer_Click(object sender, EventArgs e)
         {
             if (dgvAbonnementRevue.CurrentRow == null)
@@ -2165,8 +2339,13 @@ namespace MediaTekDocuments.view
             btnAbonnementRecherche_Click(null, null);
         }
 
-        
 
+        /// <summary>
+        /// Si les champs sont correctement remplis, demande confirmation et crée un Dto et demande l'ajout à la BdD.
+        /// Vide les champs de modification et recharge la liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAbonnementValider_Click(object sender, EventArgs e)
         {
             string id = txbAbonnementId.Text;

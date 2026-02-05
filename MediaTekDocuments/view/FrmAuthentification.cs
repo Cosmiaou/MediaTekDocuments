@@ -12,11 +12,17 @@ using MediaTekDocuments.model;
 
 namespace MediaTekDocuments.view
 {
+    /// <summary>
+    /// Vue de la frame d'authentification
+    /// </summary>
     public partial class FrmAuthentification : Form
     {
         FrmAuthentificationController controller;
         int compteurErreur;
 
+        /// <summary>
+        /// Constructeur, initialise le controller et le compteur d'erreur, ainsi que tous les éléments
+        /// </summary>
         public FrmAuthentification()
         {
             InitializeComponent();
@@ -25,7 +31,9 @@ namespace MediaTekDocuments.view
         }
 
         /// <summary>
-        /// Vérifie si les champs sont remplis. Si oui, vérifie si les informatiosn sont correctes. Si oui, vérifie si l'idService est égal à 1. Si oui, ferme l'application. Si non, ouvre l'application
+        /// Vérifie si les champs sont remplis. Si oui, vérifie si les informations sont correctes. Si incorrect, affiche une erreur et 
+        /// incrémente le compteur d'erreur. Si correct, vérifie si l'idService est égal à 1. Si oui, ferme l'application. Si non, ouvre 
+        /// l'application. Si le compteur d'erreur est supérieur à 5, ferme l'application.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -55,7 +63,7 @@ namespace MediaTekDocuments.view
             }
             else if (users[0].IdService == 1)
             {
-                MessageBox.Show("Les utilisateurs du service Culture n'ont pas accès à cette application. Contactez un supérieur.");
+                MessageBox.Show("Les utilisateurs du service Culture n'ont pas accès à cette application. Contactez un responsable.");
                 Application.Exit();
             }
             else
