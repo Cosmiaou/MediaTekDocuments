@@ -10,6 +10,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Serilog;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace MediaTekDocuments.dal
 {
@@ -65,10 +66,12 @@ namespace MediaTekDocuments.dal
                     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
                     .CreateLogger();
                 authenticationString = ConfigurationManager.AppSettings["ApiAuth"];
+                if (authenticationString == "__API_AUTH__") { throw new Exception("Les identifiants de l'API n'ont pas été configurés. Si vous ne les avez pas, demandez les au service administratif."); }
                 api = ApiRest.GetInstance(uriApi, authenticationString);
             }
             catch (Exception e)
             {
+                MessageBox.Show(e.Message);
                 Console.WriteLine(e.Message);
                 Log.Fatal(e, "Erreur lors de l'initialisation d'accès.");
                 Environment.Exit(0);

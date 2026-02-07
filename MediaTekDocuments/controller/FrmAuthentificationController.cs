@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,6 +36,26 @@ namespace MediaTekDocuments.controller
         public List<Utilisateur> ControleAuthentification(string login, string mdp)
         {
             return access.ControleAuthentification(login, mdp);
+        }
+
+        /// <summary>
+        /// Met à jour App.config en fonction des paramètres envoyés
+        /// </summary>
+        /// <param name="key">paramètre à modifier</param>
+        /// <param name="value">nouvelle valeur</param>
+        public static void UpdateConfig(string key, string value)
+        {
+            var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            if (config.AppSettings.Settings[key] != null)
+            {
+                config.AppSettings.Settings[key].Value = value;
+            }
+            else
+            {
+                config.AppSettings.Settings.Add(key, value);
+            }
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
         }
 
     }

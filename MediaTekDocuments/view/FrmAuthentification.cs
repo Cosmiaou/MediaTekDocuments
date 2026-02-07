@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -17,28 +18,53 @@ namespace MediaTekDocuments.view
     /// </summary>
     public partial class FrmAuthentification : Form
     {
-        FrmAuthentificationController controller;
+        FrmAuthentificationController controller = null;
         int compteurErreur;
+        String apiauth = "";
 
         /// <summary>
         /// Constructeur, initialise le controller et le compteur d'erreur, ainsi que tous les éléments
+        /// Récupère ApiAuth et rempli txbChaineConnexion avec, le masquant si nécessaire.
         /// </summary>
         public FrmAuthentification()
         {
             InitializeComponent();
-            controller = new FrmAuthentificationController();
             compteurErreur = 0;
+            apiauth = ConfigurationManager.AppSettings["ApiAuth"];
+            if (apiauth != "__API_AUTH__")
+            {
+                txbChaineConnexion.UseSystemPasswordChar = true;
+            }
+            txbChaineConnexion.Text = apiauth;
         }
 
         /// <summary>
-        /// Vérifie si les champs sont remplis. Si oui, vérifie si les informations sont correctes. Si incorrect, affiche une erreur et 
-        /// incrémente le compteur d'erreur. Si correct, vérifie si l'idService est égal à 1. Si oui, ferme l'application. Si non, ouvre 
-        /// l'application. Si le compteur d'erreur est supérieur à 5, ferme l'application.
+        /// Initialise le controller et modifie le fichier de configuration avec la chaine de connexion à la BdD indiquée
+        /// La modification n'a pas lieue si : la nouvelle chaine de connexion est identique à la précédente ; la nouvelle chaine est vide
+        /// </summary>
+        private void initialiseControler()
+        {
+            if (apiauth != txbChaineConnexion.Text && !String.IsNullOrEmpty(txbChaineConnexion.Text))
+            {
+                FrmAuthentificationController.UpdateConfig("ApiAuth", txbChaineConnexion.Text);
+            }
+            controller = new FrmAuthentificationController();
+        }
+
+        /// <summary>
+        /// Initialise le controller. Vérifie si les champs sont remplis. Si oui, vérifie si les informations sont correctes. Si incorrect, 
+        /// affiche une erreur et incrémente le compteur d'erreur. Si correct, vérifie si l'idService est égal à 1. Si oui, ferme 
+        /// l'application. Si non, ouvre l'application. Si le compteur d'erreur est supérieur à 5, ferme l'application.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnConnexion_Click(object sender, EventArgs e)
         {
+            if (controller == null)
+            {
+                initialiseControler();
+            }
+
             if (compteurErreur >= 5)
             {
                 Application.Exit();
@@ -57,7 +83,7 @@ namespace MediaTekDocuments.view
 
             if (users.Count == 0)
             {
-                lblErreur.Text = "Attention : mot de passe ou login incorrect.";
+                lblErreur.Text = "Attention : mot de passe, login, ou chaine connexion incorrect.";
                 compteurErreur++;
                 return;
             }
