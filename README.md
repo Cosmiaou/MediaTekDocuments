@@ -1,11 +1,9 @@
 # MediatekDocuments
-Cette application permet de gérer les documents (livres, DVD, revues) d'une médiathèque. Elle a été codée en C# sous Visual Studio 2019. C'est une application de bureau, prévue d'être installée sur plusieurs postes accédant à la même base de données.<br>
+Cette application permet de gérer les documents (livres, DVD, revues) d'une médiathèque, ainsi que les commandes de ces documents. Elle a été codée en C# sous Visual Studio 2022. C'est une application de bureau, prévue d'être installée sur plusieurs postes accédant à la même base de données.<br>
 L'application exploite une API REST pour accéder à la BDD MySQL. Des explications sont données plus loin, ainsi que le lien de récupération.
 ## Présentation
-Actuellement l'application est partiellement codée. Voici les fonctionnalités actuellement opérationnelles : recherches et affichage d'informations sur les documents de la médiathèque (livres, DVD, revues), réception de nouveaux numéros de revues.<br>
-![img1](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/9b5a4c1b-6914-4455-94bf-fec24adba3ec)
-<br>L'application ne comporte qu'une seule fenêtre divisée en plusieurs onglets.
-## Les différents onglets
+<br>L'application ne comporte deux fenêtres, une fenêtre d'authentification, et une fenêtre principale, divisée en plusieurs onglets.
+## Les différents onglets de la fenêtre principale de l'application
 ### Onglet 1 : Livres
 Cet onglet présente la liste des livres, triée par défaut sur le titre.<br>
 La liste comporte les informations suivantes : titre, auteur, collection, genre, public, rayon.
@@ -46,10 +44,45 @@ Il est possible alors de réceptionner une nouvelle parution en saisissant son n
 Le clic sur "Valider la réception" va permettre d'ajouter un tuple dans la table Exemplaire de la BDD. La parution correspondante apparaitra alors automatiquement dans la liste des parutions et les zones de la partie "Nouvelle parution réceptionnée pour cette revue" seront réinitialisées.<br>
 Si le numéro de la parution existe déjà, il n’est pas ajouté et un message est affiché.
 ![img3](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/225e10f2-406a-4b5e-bfa9-368d45456056)
+### Onglet 5 : Commandes des livres
+Cet onglet permet de consulter les commandes des livres.<br>
+Il se décompose en 3 parties (groupbox).<br>
+#### Partie "Recherche commande"
+Cette partie permet, à partir de la saisie d'un numéro de livre (puis en cliquant sur le bouton "Rechercher"), d'afficher les informations du livre, ainsi que la liste des commandes enregistrés pour ce livre.<br>
+Si un élément est sélectionné, un clic sur "Supprimer" permet de supprimer la commande, à condition que celle-ci soit au statut de suivi "livré". Un clic sur "Modifier" petmet de modifier son statut de suivi.<br>
+<img width="875" height="713" alt="image" src="https://github.com/user-attachments/assets/0dd5616a-a855-4b12-aa24-b3a68d80cc72" />
+#### Partie "Modifier suivi"
+Cette partie indique quel livre a été commandé et en quel nombre. L'utilisateur peut modifier l'état de la commande, choissisant "en cours", "relancée", "livrée" ou "réglée".<br>
+Une commande ne peut passer au statut "rêglée" que si elle a été préalablement livrée. Une commande "livrée" ou "réglée" ne peut pas retourner à un niveau inférieur.<br>
+Quand la commande passe à "livrée", les exemplaires sont automatiquement rajoutés dans la base de donnée.<br>
+#### Partie "Ajouter commande"
+Cette partie permet l'ajout d'une commande d'un livre. Le livre doit être sélectionné dans la liste, et l'utilisateur doit indiquer le nombre d'exemplaires commandés et le montant.<br>
+L'utilisateur doit sélectionner un identifiant pour la commande. Cet identifiant doit être unique. Les identifiants sont partagés parmis les commandes de livre, de dvd, et de revues.<br>
+### Onglet 6 : Commandes de dvd
+Cet onglet est identique à celui des commandes de livre, mais concerne les dvd. Le fonctionnement et le principe est le même.
+### Onglet 7 : Abonnement
+Cet onglet permet de consulter les abonnements, qui sont en fait l'équivalent des commandes, mais pour les revues.<br>
+Il se décompose en 2 parties (groupbox).<br>
+<img width="877" height="713" alt="image" src="https://github.com/user-attachments/assets/d2c94e7c-e818-4e03-826a-427c097fe962" />
+#### Partie "Rechercher les abonnements"
+Elle fonctionne identiquement aux commandes des autres documents.<br>
+Cette partie permet, à partir de la saisie d'un numéro d'une revue (puis en cliquant sur le bouton "Rechercher"), d'afficher les informations de la revue, ainsi que la liste des abonnements passés, présents et futur enregistrés pour ce livre.<br>
+Le bouton "Supprimer" permet de supprimer un abonnement. La suppression n'est possible que si un abonnement est choisi, et uniquement si cet abonnement n'est reliée à aucun exemplaire enregistré d'une revue.<br>
+#### Partie "Nouvel abonnement"
+Cet partie permet d'ajouter un abonnement, qui peut être un abonnement à une nouvelle revue ou un simple renouvellement - l'application ne voit pas la différence.<br>
+La revue doit être préalablement créée et sélectionné dans le menu. Il faut choisir un montant d'exemplaire attendu, une date de début, qui doit être antérieure à la date de fin. Il n'y a pas de limite maximale de temps pour l'abonnement.<br>
+L'utilisateur doit sélectionner un identifiant pour la commande. Cet identifiant doit être unique. Les identifiants sont partagés parmis les commandes de livre, de dvd, et de revues.<br>
+## Fenêtre d'authentification
+La fenêtre d'authentification est rencontrée lors de chaque lancement de l'application. Il est nécessaire de s'authentifier pour l'utiliser.<br>
+<img width="435" height="332" alt="image" src="https://github.com/user-attachments/assets/54c1a257-1572-4fc3-9e65-a5a1912ac474" />
+Il faut indiquer un mot de passe et un nom d'utilisateur. Ces informations ne sont pas gêrées dans l'application, ils sont stockées dans la base de données et seront transmis par le responsable du service informatique.<br>
+Une chaîne de connexion doit être indiquée. Lors de la première connexion a l'application, elle est fixée sur une valeur à remplacer. Une fois remplacée, elle sera mémorisée.<br>
+La chaîne de connexion est selon le modèle "nom:motdepasse". Important : si la chaîne de connexion est mauvaise, l'application se fermera.<br>
+
 ## La base de données
 La base de données 'mediatek86 ' est au format MySQL.<br>
 Voici sa structure :<br>
-![img4](https://github.com/CNED-SLAM/MediaTekDocuments/assets/100127886/4314f083-ec8b-4d27-9746-fecd1387d77b)
+![mcd_mediatekdocuments](https://github.com/user-attachments/assets/0f97b2ce-835f-4276-b61c-84d0baacdbf8)
 <br>On distingue les documents "génériques" (ce sont les entités Document, Revue, Livres-DVD, Livre et DVD) des documents "physiques" qui sont les exemplaires de livres ou de DVD, ou bien les numéros d’une revue ou d’un journal.<br>
 Chaque exemplaire est numéroté à l’intérieur du document correspondant, et a donc un identifiant relatif. Cet identifiant est réel : ce n'est pas un numéro automatique. <br>
 Un exemplaire est caractérisé par :<br>
@@ -68,10 +101,16 @@ Lorsque l'application sera opérationnelle, c'est le personnel de la médiathèq
 ## L'API REST
 L'accès à la BDD se fait à travers une API REST protégée par une authentification basique.<br>
 Le code de l'API se trouve ici :<br>
-https://github.com/CNED-SLAM/rest_mediatekdocuments<br>
+https://github.com/Cosmiaou/rest_mediatekdocuments<br>
 avec toutes les explications pour l'utiliser (dans le readme).
-## Installation de l'application
+
+## Installation de l'application (pour l'utilisateur)
+Téléchargez et exécuter le .exe disponible à cette adresse.<br>
+https://github.com/Cosmiaou/MediaTekDocuments/releases/tag/release<br>
+Suivez les instructions. Une fois le téléchargement terminé, rendez-vous dans le fichier du téléchargement (par défaut : C:\Program Files(x86)\MediaTekInstaller) et lancez MediaTekDocuments.exe.<br>
+Indiquez les identifiants de connexion et utilisez l'application.<br>
+## Installation de l'application (pour développeur)
 Ce mode opératoire permet d'installer l'application pour pouvoir travailler dessus.<br>
-- Installer Visual Studio 2019 entreprise et les extension Specflow et newtonsoft.json (pour ce dernier, voir l'article "Accéder à une API REST à partir d'une application C#" dans le wiki de ce dépôt : consulter juste le début pour la configuration, car la suite permet de comprendre le code existant).<br>
+- Installer Visual Studio 2022 entreprise et l'extension Serilog.<br>
 - Télécharger le code et le dézipper puis renommer le dossier en "mediatekdocuments".<br>
-- Récupérer et installer l'API REST nécessaire (https://github.com/CNED-SLAM/rest_mediatekdocuments) ainsi que la base de données (les explications sont données dans le readme correspondant).
+- Récupérer et installer l'API REST nécessaire (https://github.com/Cosmiaou/rest_mediatekdocuments) ainsi que la base de données (les explications sont données dans le readme correspondant).
